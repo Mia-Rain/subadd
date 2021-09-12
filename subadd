@@ -1,0 +1,20 @@
+#!/bin/sh
+# subtract by adding (kinda)
+# this is a cool lil gimmic that was showcased in "minutephysics"
+IFS=" "; f1=${1%%-*}; f2=${1##*-}
+f2=$(printf '%s' $f2); f1=$(printf '%s' $f1)
+# cut down on spaces... and cut args into 2
+
+IFS=""; n=0; c="$f2"; while [ "$c" ]; do
+  : $((n+=1)); next="${c#?}"
+  ca="${c%$next}"; case "$n" in
+    "${#f2}")
+    newf2="$newf2$(( 10-ca ))" ;;
+    *)
+    newf2="$newf2$(( 9-ca ))" ;;
+  esac
+  c="$next"
+done;  a="$((f1 + newf2))"
+echo "$f1 - $f2
+$f1 + $newf2 = $((f1 + newf2))
+$f1 - $f2 = ${a#?}"
